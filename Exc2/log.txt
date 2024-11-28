@@ -1,0 +1,70 @@
+kubectl describe deployment scaletestapp
+Name:                   scaletestapp
+Namespace:              test
+CreationTimestamp:      Mon, 25 Nov 2024 22:46:04 +0300
+Labels:                 app=scaletestapp-deployment
+Annotations:            deployment.kubernetes.io/revision: 2
+Selector:               app=scaletestapp
+Replicas:               10 desired | 10 updated | 10 total | 10 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=scaletestapp
+  Containers:
+   scaletestapp:
+    Image:      shestera/scaletestapp
+    Port:       8080/TCP
+    Host Port:  0/TCP
+    Requests:
+      cpu:         100m
+      memory:      4Mi
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  scaletestapp-5cfc465d7c (0/0 replicas created)
+NewReplicaSet:   scaletestapp-67d66d88c (10/10 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  24m   deployment-controller  Scaled up replica set scaletestapp-67d66d88c to 1
+  Normal  ScalingReplicaSet  24m   deployment-controller  Scaled down replica set scaletestapp-5cfc465d7c to 0 from 1
+  Normal  ScalingReplicaSet  20m   deployment-controller  Scaled up replica set scaletestapp-67d66d88c to 4 from 1
+  Normal  ScalingReplicaSet  19m   deployment-controller  Scaled up replica set scaletestapp-67d66d88c to 5 from 4
+  Normal  ScalingReplicaSet  19m   deployment-controller  Scaled up replica set scaletestapp-67d66d88c to 9 from 5
+  Normal  ScalingReplicaSet  18m   deployment-controller  Scaled up replica set scaletestapp-67d66d88c to 10 from 9
+
+
+kubectl top pod
+NAME                           CPU(cores)   MEMORY(bytes)   
+scaletestapp-67d66d88c-6s9rv   1m           4Mi             
+scaletestapp-67d66d88c-84bz9   1m           6Mi             
+scaletestapp-67d66d88c-9lcdf   1m           6Mi             
+scaletestapp-67d66d88c-bhhtm   1m           6Mi             
+scaletestapp-67d66d88c-c6b4f   1m           6Mi             
+scaletestapp-67d66d88c-drf55   1m           6Mi             
+scaletestapp-67d66d88c-hnnxf   1m           17Mi            
+scaletestapp-67d66d88c-m9zk2   1m           6Mi             
+scaletestapp-67d66d88c-ps4fb   1m           6Mi             
+scaletestapp-67d66d88c-x6m4p   1m           6Mi 
+
+
+kubectl get pods -o wide
+NAME                           READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+scaletestapp-67d66d88c-6s9rv   1/1     Running   0          24m   10.244.0.14   minikube   <none>           <none>
+scaletestapp-67d66d88c-84bz9   1/1     Running   0          24m   10.244.0.15   minikube   <none>           <none>
+scaletestapp-67d66d88c-9lcdf   1/1     Running   0          25m   10.244.0.11   minikube   <none>           <none>
+scaletestapp-67d66d88c-bhhtm   1/1     Running   0          24m   10.244.0.16   minikube   <none>           <none>
+scaletestapp-67d66d88c-c6b4f   1/1     Running   0          25m   10.244.0.13   minikube   <none>           <none>
+scaletestapp-67d66d88c-drf55   1/1     Running   0          25m   10.244.0.10   minikube   <none>           <none>
+scaletestapp-67d66d88c-hnnxf   1/1     Running   0          30m   10.244.0.9    minikube   <none>           <none>
+scaletestapp-67d66d88c-m9zk2   1/1     Running   0          24m   10.244.0.17   minikube   <none>           <none>
+scaletestapp-67d66d88c-ps4fb   1/1     Running   0          25m   10.244.0.12   minikube   <none>           <none>
+scaletestapp-67d66d88c-x6m4p   1/1     Running   0          23m   10.244.0.18   minikube   <none>           <none>
